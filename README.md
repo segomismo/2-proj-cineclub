@@ -1,47 +1,21 @@
-# W3 Project - Building mySQL Data-base 
-
-![portada](https://i0.wp.com/itsoftware.com.co/content/wp-content/uploads/2018/03/que-es-y-para-que-sirve-mysql-1.jpg)
+# Proyecto de creacción de base de datos de un videoclub
 
 
-The goal of this project is to build your own database from several csv files. For this project, you will start with 6 `csv` files. You will need to download it, import it, use your data wrangling skills to clean it up, have a first look at the data to figure out out to structure it, prepare it to be loaded in a sql database and finally build it. Some graphs to better understand the data will surely be useful!!
-
-## TO DO's
-
-1. Explore the data and write down what you have found
-   - you can use: `df.describe()`, `df["column"]`, etc.
-1. Clean the data (you can get rid of columns that doesn't give information)
-1. Build your databse
-1. Write at least 10 queries including: join, groupby, orderby, where, subqueries….that you think will be useful to get interesting insights from the data.**(SELECT* FROM TABLE_NAME doesn't count...)** 
-+ Bonus: Get creative!!! Create totally new tables or enrich the csv files with new data (found on the internet or even made up) that makes your database more valuable.
+Lo primero que se ha hecho en este proyecto ha sido una investigación de cada tabla. En ese investigación se ha llegado a diferentes conclusiones.
+Nuestro fin es crear una base de datos para un nuevo videoclub, en el que nos apoyaremos de las peliculas que ya teniamos en inventario, pero eliminamos tanto los clientes anteriores como tiendas y staff. Esas tablas parten de cero, por lo que al crearlas, las hemos dejado desconectadas del resto para que se puedan poner en el futuro.
+La primera es que hay columnas que son innecesarias, como pueda ser last_update en la mayoria de tablas
+La tabla languaje, que en principio puede resultar inutil dado que todas son en inglés, hemos decidido conservarla para mantener los codigos de idiomas de DVD. Hemos establecido una relacion de 1:n y no n:m porque el videoclub se centra en peliculas en V.O. Solo teniendo un idioma y considerando la existencia de los subtítulos multidioma de forma implícita.
 
 
-## Suggested Ways to Get Started
+Además de eso, se han encontrado diferentes incongruencias en los datos, como que la fecha de lanzamiento sea un año (2006 concretamente) y hubiera referencia de alquiler de alguna pelicula en 2005. Tras una investigación sobre cómo funcionan los lanzamientos en DVD, se ha llegado a la conclusión de que se puede haber tomado la fecha de lanzamiento como la fecha en la que aparece el DVD en las tiendas, pero que en las llamadas "ventanas" la fecha de cine y de alquiler son anteriores a cuando aparece el DVD para el público. Si bien es cierto que estos periodos de ventanas se han acortado drásticamente en los ultimos años por los servicios de streaming, en la época de la que tenemos constancia en los registros, las ventanas tenian plazos de varios meses.
 
-- Examine the data and try to understand what the fields mean before building the database.
-- Break the project down into different steps - use the topics covered in the lessons to form a check list, add anything else you can think of that may be wrong with your data set, and then work through the check list.
-- Use the tools in your tool kit - your knowledge of Python, data structures, Pandas, and data wrangling.
-  Work through the lessons in class & ask questions when you need to! Think about adding relevant code to your project each night, instead of, you know... procrastinating.
-- Commit early, commit often, don’t be afraid of doing something incorrectly because you can always roll back to a previous version.
-- Consult documentation and resources provided to better understand the tools you are using and how to accomplish what you want.
-
-## How to deliver the project
-
-1. Create a new repo with the name `sql-data-base-building` on your github account.
-   - Create a `README.md` file on repo root with project documentation. Make sure to include as much useful information as possible. Someone that finds the README.md should be able to fully get a gist of the project without browsing your files.
-   - Include a `.gitignore`
-   - At least 1 jupyter notebook is required
-   - Include the necessary code files to create and feed the database.
-   - Including your functions in a `src.py` is mandatory.
-   
-2. Open an `Issue` on this repo and paste your own repo's link.
-
-## Links & Resources
+Otra incongruencia encontrada en los datos, ha sido que en de las 223 peliculas que habia en film coincidentes con el id de inventario, habia 16 peliculas que estaban en films pero no en inventario. Para poder solucionar si el cliente tenia todas las peliculas que aparecian en films y tomar como datos válidos esa tabla, se llegó a la solución de "llamar al cliente" y su "contestación" fue que esas 16 peliculas perdidas se las comió un tiburón blanco mientras hacia surf en estados unidos, y que del resto que no aparecian en inventory pero si en films, conservaba una única copia de cada una de ellas.
 
 
-- <https://numpy.org/doc/1.18/>
-- <https://pandas.pydata.org/>
-- https://docs.python.org/3/library/functions.html
-- https://matplotlib.org/
-- https://seaborn.pydata.org/
-- https://pandas.pydata.org/docs/
-- https://towardsdatascience.com/beware-of-storytelling-with-data-1710fea554b0?gi=537e0c10d89e
+Otra cosa que hemos dejado constancia por escrito al cliente es la futura creación de una tabla de "directores". Si bien el cliente no parecía muy entusiasmado porque había que meter los datos de las películas que ya están en inventario, se ha insistido mucho en esta idea, partiendo de la base que sería una relación n:m y que necesitaria de una tabla intermedia en la base de datos.
+
+
+Las instrucciones que se seguirán para la creación de la base de datos es lanzar el cuaderno de jupiter, que exportar a mysql, y desde mysql lanzar la query de crearbase.sql que contiene tanto la creación de las tablas que serán conectadas en el futuro, como la modificación de las actuales para crear las conexiones apropiadas entre ellas.
+
+
+Se plantean algunas dudas de las tablas resultantes por la falta de tiempo. Una de esas dudas sería la compatibilidad de las nuevas tablas cuya ID es de tipo int, con las otras cuyo tipo es bigint. Se parte de la idea de que si que se podrán conectar, y después de una investigación se ha concluido que se podrian modificar las columnas de bigint por int. 
