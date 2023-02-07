@@ -1,6 +1,6 @@
 # Proyecto de creacción de base de datos de un videoclub
 
-
+![uno](/imagenes/base de datos.png)
 Lo primero que se ha hecho en este proyecto ha sido una investigación de cada tabla. En ese investigación se ha llegado a diferentes conclusiones.
 Nuestro fin es crear una base de datos para un nuevo videoclub, en el que nos apoyaremos de las peliculas que ya teniamos en inventario, pero eliminamos tanto los clientes anteriores como tiendas y staff. Esas tablas parten de cero, por lo que al crearlas, las hemos dejado desconectadas del resto para que se puedan poner en el futuro.
 La primera es que hay columnas que son innecesarias, como pueda ser last_update en la mayoria de tablas
